@@ -124,3 +124,17 @@ body, html {
   color: green;
   font-weight: bold;
 }
+.tooltip {
+  position: absolute;
+  top: 40px; /* מתחת לאייקון */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}

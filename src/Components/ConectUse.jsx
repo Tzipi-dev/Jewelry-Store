@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { CiMail } from "react-icons/ci";
 import logo from '../assets/logo.png';
 import { send } from "@emailjs/browser";
+import { auth, provider } from '../firebaseConfig';
+import { signInWithPopup } from "firebase/auth";
 
 const ConectUse = () => {
     const [formData, setFormData] = useState({
@@ -14,6 +16,8 @@ const ConectUse = () => {
         message: ""
     });
     const [status, setStatus] = useState("");
+    const [user, setUser] = useState(null);
+    const [hover, setHover] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -27,7 +31,6 @@ const ConectUse = () => {
             import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
             import.meta.env.VITE_EMAILJS_PUBLIC_KEY
         );
-
         console.log("Form data:", formData);
 
         send(
@@ -47,63 +50,86 @@ const ConectUse = () => {
         });
     };
 
+    const handleGoogleSignIn = () => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                setUser(result.user);
+                console.log("Signed in user:", result.user);
+            })
+            .catch((error) => {
+                console.error("Error signing in:", error);
+                alert("אירעה שגיאה בהתחברות.");
+            });
+    };
+
     return (
         <div>
-            <div>
-                <nav className="sticky-nav">
-                    <Link to="/home">
-                        <img src={logo} alt="Logo" style={{ height: '7vh' }} />
+            <nav className="sticky-nav">
+                <Link to="/home">
+                    <img src={logo} alt="Logo" style={{ height: '7vh' }} />
+                </Link>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                    <Link to="/contact">
+                        <IoMdContacts style={{ fontSize: 'x-large', marginTop: '1vh' }} />
                     </Link>
-                    <div>
-                        <Link to="/contact">
-                            <IoMdContacts style={{ fontSize: 'x-large', marginTop: '1vh' }} />
-                        </Link>
-                        <a>
-                            <CiUser style={{ fontSize: 'x-large', marginTop: '1vh' }} />
-                        </a>
-                        <Link to="/cart">
-                            <CiShoppingCart style={{ fontSize: 'x-large', marginTop: '1vh' }} />
-                        </Link>
-                        <Link to="/home">
-                            <CiHome style={{ fontSize: 'x-large', marginTop: '1vh' }} />
-                        </Link>
+
+                    <div
+                        style={{ position: 'relative', display: 'inline-block', cursor: 'pointer' }}
+                        onClick={handleGoogleSignIn}
+                        onMouseEnter={() => setHover(true)}
+                        onMouseLeave={() => setHover(false)}
+                    >
+                        <CiUser style={{ fontSize: 'x-large', marginTop: '1vh' }} />
+
+                        {hover && (
+                            <div className="tooltip">
+                                {user ? `מחובר כ: ${user.displayName}` : "לא מחובר - התחברי עם Google"}
+                            </div>
+                        )}
                     </div>
-                </nav>
 
-                <div className="contact-page">
-                    <div className="contact-container">
-                        <h1>צור קשר</h1>
-                        <p>נשמח לשמוע ממך! השאירי הודעה ואנחנו נחזור בהקדם.</p>
+                    <Link to="/cart">
+                        <CiShoppingCart style={{ fontSize: 'x-large', marginTop: '1vh' }} />
+                    </Link>
+                    <Link to="/home">
+                        <CiHome style={{ fontSize: 'x-large', marginTop: '1vh' }} />
+                    </Link>
+                </div>
+            </nav>
 
-                        <form className="contact-form" onSubmit={handleSubmit}>
-                            <input 
-                                type="text" 
-                                name="name" 
-                                placeholder="שם מלא" 
-                                value={formData.name} 
-                                onChange={handleChange} 
-                                required 
-                            />
-                            <input 
-                                type="email" 
-                                name="email" 
-                                placeholder="דוא״ל" 
-                                value={formData.email} 
-                                onChange={handleChange} 
-                                required 
-                            />
-                            <textarea 
-                                name="message" 
-                                placeholder="הודעה" 
-                                value={formData.message} 
-                                onChange={handleChange} 
-                                required 
-                            />
-                            <button type="submit">שלח הודעה</button>
-                        </form>
+            <div className="contact-page">
+                <div className="contact-container">
+                    <h1>צור קשר</h1>
+                    <p>נשמח לשמוע ממך! השאירי הודעה ואנחנו נחזור בהקדם.</p>
 
-                        {status && <p className="status">{status}</p>}
-                    </div>
+                    <form className="contact-form" onSubmit={handleSubmit}>
+                        <input 
+                            type="text" 
+                            name="name" 
+                            placeholder="שם מלא" 
+                            value={formData.name} 
+                            onChange={handleChange} 
+                            required 
+                        />
+                        <input 
+                            type="email" 
+                            name="email" 
+                            placeholder="דוא״ל" 
+                            value={formData.email} 
+                            onChange={handleChange} 
+                            required 
+                        />
+                        <textarea 
+                            name="message" 
+                            placeholder="הודעה" 
+                            value={formData.message} 
+                            onChange={handleChange} 
+                            required 
+                        />
+                        <button type="submit">שלח הודעה</button>
+                    </form>
+
+                    {status && <p className="status">{status}</p>}
                 </div>
             </div>
         </div>

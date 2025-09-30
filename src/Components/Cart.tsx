@@ -29,26 +29,16 @@ const Cart = () => {
                 <Link to="/home">
                     {/* <img src={logo} alt="Logo" style={{ height: '7vh' }} /> */}
                 </Link>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                <div>
                     <Link to="/contact">
                         <IoMdContacts style={{ fontSize: 'x-large', marginTop: '1vh' }} />
                     </Link>
-
-                    <div
-                        style={{ position: 'relative', display: 'inline-block', cursor: 'pointer' }}
+                    <Link to="/user"
                         onClick={handleGoogleSignIn}
                         onMouseEnter={() => setHover(true)}
-                        onMouseLeave={() => setHover(false)}
-                    >
+                        onMouseLeave={() => setHover(false)}>
                         <CiUser style={{ fontSize: 'x-large', marginTop: '1vh' }} />
-
-                        {hover && (
-                            <div className="tooltip">
-                                {user ? `מחובר כ: ${user.displayName}` : "לא מחובר - התחברי עם Google"}
-                            </div>
-                        )}
-                    </div>
-
+                    </Link>
                     <Link to="/cart">
                         <CiShoppingCart style={{ fontSize: 'x-large', marginTop: '1vh' }} />
                     </Link>

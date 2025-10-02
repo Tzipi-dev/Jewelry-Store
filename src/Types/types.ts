@@ -1,4 +1,4 @@
-export interface Product {
+export interface Product  {
     name: string;
     price: number;
     rating: number;
@@ -11,14 +11,14 @@ export interface Product {
     amountInStock: number;
     views: number;
 }
-export interface User {
+export interface User   {
     name: string;
     email: string;
     password: string;
     phone: string;
     address: string;
 }
-export interface Cart {
+export interface Cart   {
     dateOfBuy: Date;
     owner: User;
     products: Array<Product>;

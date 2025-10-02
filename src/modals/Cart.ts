@@ -1,9 +1,8 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { Cart as ICart } from '../Types/types';
-import User from "./User";
-import Product from "./Product";
+import type { Cart } from '../Types/types';
 
-interface CartDoc extends ICart, Document {}
+
+interface CartDoc extends Cart, Document {}
 
 const CartSchema: Schema<CartDoc> = new Schema({
   dateOfBuy: { type: Date, default: Date.now },

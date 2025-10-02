@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import Product from '../modals/Product';
+import type { Request, Response } from "express";
+import Product from '../modals/Product.ts';
 
 // יצירת מוצר חדש
 export const createProduct = async (req: Request, res: Response) => {

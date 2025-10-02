@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import Cart from '../modals/Cart';
+import type { Request, Response } from "express";
+import Cart from '../modals/Cart.ts';
 
 // יצירת סל קניות חדש
 export const createCart = async (req: Request, res: Response) => {
@@ -8,7 +8,7 @@ export const createCart = async (req: Request, res: Response) => {
     const saved = await cart.save();
     res.status(201).json(saved);
   } catch (err) {
-    res.status(500).json({ error: "Failed to create cart", details: err });
+    res.status(500).json({ erשror: "Failed to create cart", details: err });
   }
 };
 

@@ -15,6 +15,7 @@ const Cart = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
                 setUser(result.user);
+                localStorage.setItem('user', JSON.stringify(result.user));
                 console.log("Signed in user:", result.user);
             })
             .catch((error) => {

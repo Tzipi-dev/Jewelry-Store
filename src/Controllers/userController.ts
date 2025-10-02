@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import User from '../modals/User';
+import type { Request, Response } from "express";
+import User from '../modals/User.ts';
 
 // יצירת משתמש
 export const createUser = async (req: Request, res: Response) => {

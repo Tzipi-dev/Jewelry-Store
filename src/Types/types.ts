@@ -23,10 +23,12 @@ export interface Cart   {
     owner: User;
     products: Array<Product>;
 }
-export enum Category {
-    Earrings = "עגילים",
-    Bracelets = "צמידים",
-    Watches = "שעונים",
-    Necklaces = "שרשראות",
-    Rings = "טבעות"
-}
+export const Category = {
+  Earrings: "עגילים",
+  Bracelets: "צמידים",
+  Watches: "שעונים",
+  Necklaces: "שרשראות",
+  Rings: "טבעות",
+} as const;
+
+export type Category = typeof Category[keyof typeof Category];
